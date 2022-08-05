@@ -1,9 +1,9 @@
-package mapper;
+package crud.mapper;
 
-import bean.Area;
-import bean.User;
+import crud.bean.Area;
+import crud.bean.User;
+import org.apache.ibatis.annotations.Mapper;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +11,7 @@ import java.util.Map;
  * @author WANG
  * @date 2022年07月20日 20:30
  */
+
 public interface UserMapper {
     /**
      *注册

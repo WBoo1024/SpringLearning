@@ -1,8 +1,7 @@
-package service;
+package crud.service;
 
-import bean.User;
-import com.sun.deploy.net.HttpRequest;
-import vo.Result;
+import crud.bean.User;
+import crud.vo.Result;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -17,7 +16,7 @@ public interface UserService {
     Result register(User user) throws SQLException;
 
     //登陆
-    Result login(User user, HttpServletRequest request);
+    Result login(User user);
 
     Result getUsers(Map<String, Object> map);
 

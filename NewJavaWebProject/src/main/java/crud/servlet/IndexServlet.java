@@ -1,11 +1,13 @@
-package servlet;
+package crud.servlet;
 
-import bean.Teacher;
+import com.sun.org.apache.bcel.internal.generic.NEW;
+import crud.bean.Teacher;
 import com.google.gson.Gson;
 import org.apache.commons.beanutils.BeanUtils;
-import service.DataService;
-import service.impl.DataServiceImpl;
-import vo.Result;
+import crud.service.DataService;
+import crud.service.impl.DataServiceImpl;
+import crud.vo.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -24,6 +26,7 @@ import java.util.Map;
  */
 @WebServlet("/index/*")
 public class IndexServlet extends HttpServlet {
+    @Autowired
     private DataService dataService;
 
     public IndexServlet() {
@@ -101,7 +104,8 @@ public class IndexServlet extends HttpServlet {
         map.put("pageNum",page);
         map.put("pageSize",limit);
         map.put("name",name);
-        Result result = dataService.allSearch(map);
+        Result result = new Result();
+        result = dataService.allSearch(map);
         response.getWriter().write(new Gson().toJson(result));
     }
 }

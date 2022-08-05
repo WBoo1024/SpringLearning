@@ -1,6 +1,7 @@
-package vo;
+package crud.vo;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 /**
  * @program: NewJavaWebProject
@@ -9,6 +10,7 @@ import lombok.Data;
  * @created: 2022/07/20 15:31
  */
 @Data
+@Component
 public class Result {
     private  int code;
     private String msg;

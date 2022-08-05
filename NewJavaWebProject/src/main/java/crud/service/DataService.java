@@ -1,12 +1,8 @@
-package service;
+package crud.service;
 
-import bean.Area;
-import bean.Teacher;
-import bean.User;
-import vo.Result;
+import crud.bean.Teacher;
+import crud.vo.Result;
 
-import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
 
 /**

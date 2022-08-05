@@ -1,4 +1,4 @@
-package servlet;
+package crud.servlet;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

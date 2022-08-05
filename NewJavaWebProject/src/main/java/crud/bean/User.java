@@ -1,6 +1,7 @@
-package bean;
+package crud.bean;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.Date;
  */
 
 @Data
+@Component
 public class User {
     private int uid;
     private String username;

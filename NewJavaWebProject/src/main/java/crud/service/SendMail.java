@@ -1,4 +1,4 @@
-package service;
+package crud.service;
 
 import com.sun.mail.util.MailSSLSocketFactory;
 

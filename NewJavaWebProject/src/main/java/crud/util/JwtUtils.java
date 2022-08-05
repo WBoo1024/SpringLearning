@@ -1,4 +1,4 @@
-package util;
+package crud.util;
 
 import io.jsonwebtoken.*;
 

@@ -1,11 +1,8 @@
-package mapper;
+package crud.mapper;
 
-import bean.Area;
-import bean.Teacher;
-import bean.User;
-import vo.Result;
+import crud.bean.Teacher;
+import org.apache.ibatis.annotations.Mapper;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +10,7 @@ import java.util.Map;
  * @author WANG
  * @date 2022年07月20日 20:32
  */
+
 public interface DataMapper {
 
     List<Teacher> allSearch(Map<String,Object> map);

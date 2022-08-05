@@ -1,6 +1,7 @@
-package bean;
+package crud.bean;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 /**
  * @program: NewJavaWebProject
@@ -9,6 +10,7 @@ import lombok.Data;
  * @created: 2022/07/20 15:28
  */
 @Data
+@Component
 public class Area {
     private String code;
     private String name;

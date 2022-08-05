@@ -1,12 +1,13 @@
-package servlet;
+package crud.servlet;
 
-import bean.User;
+import crud.bean.User;
 import com.google.gson.Gson;
 import org.apache.commons.beanutils.BeanUtils;
-import service.SendMail;
-import service.UserService;
-import service.impl.UserServiceImpl;
-import vo.Result;
+import crud.service.SendMail;
+import crud.service.UserService;
+import crud.service.impl.UserServiceImpl;
+import crud.vo.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -25,8 +26,9 @@ import java.util.Map;
 /**
  * @author WANG
  */
-@WebServlet("/front/*")
+
 public class UserServlet extends HttpServlet {
+    @Autowired
     private UserService userService;
 
     @Override
@@ -149,13 +151,14 @@ public class UserServlet extends HttpServlet {
 
     //登陆请求
     private void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Result result = new Result();
         User user = new User();
         try {
             BeanUtils.populate(user, request.getParameterMap());
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
-        Result result = userService.login(user, request);
+        result = userService.login(user);
         response.getWriter().write(new Gson().toJson(result));
     }
 
