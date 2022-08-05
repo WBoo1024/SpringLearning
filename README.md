@@ -1,14 +1,14 @@
-[//]: # (<div style="text-align: center;width: 1340px;height: 400px;background-image: linear-gradient&#40;to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%&#41;;">)
+![](https://s3.bmp.ovh/imgs/2022/08/05/8fdd7945ae3ba813.png)
 
-[//]: # (<span style="font-size:60px;line-height: 400px"><i>)
-
-[//]: # (<span style="color: #A8EDEA;">H</span><span style="color: #BDD7D4; ">E</span><span style="color: #D2C2EA; ">L</span><span style="color: #E7D7D4; ">L</span><span style="color: #FDC2EA; ">O</span>)
-
-[//]: # (<span style="color: #FFD7D4; ">W</span><span style="color: #E9C2EA; ">O</span><span style="color: #FFD7D4; ">R</span><span style="color: #E9C2EA; ">L</span><span style="color: #FFD7D4; ">D</span>)
-
-[//]: # (<span style="color: #E9C2EA; ">!</span>)
-
-[//]: # (</i></span>)
-
-[//]: # (</div>)
-![](https://s3.bmp.ovh/imgs/2022/08/04/3b4f8d7936755678.png)
+- [x] 更新curd接口版本
+  - [x] 集成myBatis框架，完成后台增删改查 release:v1.0.0 
+  - [ ] 集成spring框架，基于配置文件 release:v2.0.0
+  - [ ] 基于注解开发 release:v3.0.0
+- [x] 完成git学习
+  - [x] 建立远程仓库toBetter
+    - [x] 管理账号:W_Boo,完成PR
+    - [X] 开发账号:壹零二四,完成分支项目开发
+  - [x] 本地仓库与远程仓库关联使用
+  - [x] idea集成git写项目
+    - [ ] 在远程仓库指定文件夹中建立空分支，导入新项目
+- [ ] To be developed
