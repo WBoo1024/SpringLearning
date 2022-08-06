@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--  实现对以上对象实现IOC，基于配置文件实现（单例）  -->
+    <bean id="clazz" class="lanou.bean.Clazz">
+        <property name="clazzCode" value="1"/>
+        <property name="clazzName" value="一班"/>
+    </bean>
+
+    <bean id="course" class="lanou.bean.Course">
+        <property name="cno" value="1"/>
+        <property name="cname" value="1"/>
+        <property name="teacher">
+            <bean class="lanou.bean.Teacher"/>
+        </property>
+    </bean>
+
+    <bean id="claz" class="lanou.bean.Clazz">
+        <property name="clazzCode" value="2"/>
+        <property name="clazzName" value="二班"/>
+    </bean>
+    <bean id="student" class="lanou.bean.Student">
+        <property name="id" value="1"/>
+        <property name="stuName" value="学生姓名"/>
+        <property name="sex" value="性别"/>
+        <property name="birthday" value="出生日期"/>
+        <property name="clazz" ref="claz"/>
+        <property name="courses">
+            <list>
+                <bean id="course1" class="lanou.bean.Course"/>
+                <bean id="course2" class="lanou.bean.Course"/>
+            </list>
+        </property>
+        <property name="clazzs">
+            <array>
+                <bean id="clazz1" class="lanou.bean.Clazz"/>
+                <bean id="clazz2" class="lanou.bean.Clazz"/>
+                <bean id="clazz3" class="lanou.bean.Clazz"/>
+            </array>
+        </property>
+        <property name="teacherMap">
+            <map>
+                <entry key-ref="teacher1" value-ref="Course4"/>
+                <entry key-ref="teacher2" value-ref="Course5"/>
+                <entry key-ref="teacher3" value-ref="Course6"/>
+            </map>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="1" value="1"/>
+                <entry key="2" value="2"/>
+            </map>
+        </property>
+        <property name="names">
+            <array>
+                <value>张三</value>
+                <value>李四</value>
+                <value>王五</value>
+            </array>
+        </property>
+    </bean>
+    <bean id="teacher1" class="lanou.bean.Teacher"/>
+    <bean id="teacher2" class="lanou.bean.Teacher"/>
+    <bean id="teacher3" class="lanou.bean.Teacher"/>
+    <bean id="Course4" class="lanou.bean.Course"/>
+    <bean id="Course5" class="lanou.bean.Course"/>
+    <bean id="Course6" class="lanou.bean.Course"/>
+
+    <bean id="sdf" class="java.text.SimpleDateFormat">
+        <constructor-arg value="yyyy-mm-dd"/>
+    </bean>
+    <bean id="teacher" class="lanou.bean.Teacher">
+        <property name="TNo" value="1"/>
+        <property name="TName" value="姓名"/>
+        <property name="TSex" value="老师性别"/>
+        <property name="TBirthday">
+            <bean  factory-bean="sdf" factory-method="parse">
+                <constructor-arg value="2022-8-5"/>
+            </bean>
+        </property>
+        <property name="prof" value="1"/>
+        <property name="depart" value="1"/>
+    </bean>
+</beans>
