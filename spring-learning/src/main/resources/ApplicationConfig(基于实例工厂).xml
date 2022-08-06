@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="factory" class="lanou.factory.FactoryExample"/>
+    <bean id="student"  factory-bean="factory" factory-method="getStudent"/>
+    <bean id="clazz"  factory-bean="factory" factory-method="getClazz"/>
+    <bean id="course"  factory-bean="factory" factory-method="getCourse"/>
+    <bean id="teacher"  factory-bean="factory" factory-method="getTeacher"/>
+</beans>
