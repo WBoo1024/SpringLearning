@@ -3,23 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-<!--  将spring容器整合到web容器中  -->
+    <!--  将spring容器整合到web容器中  -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:ApplicationConfig.xml</param-value>
     </context-param>
-    <!--  配置一个监听器  -->
+    <!--  配置监听器  -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-
-
-    <servlet>
-        <servlet-name>user</servlet-name>
-        <servlet-class>crud.servlet.UserServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>user</servlet-name>
-        <url-pattern>/front/*</url-pattern>
-    </servlet-mapping>
 </web-app>

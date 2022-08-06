@@ -6,16 +6,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.jsonwebtoken.Claims;
 import crud.mapper.UserMapper;
-import org.apache.ibatis.session.SqlSession;
 import crud.service.UserService;
 import crud.util.JwtUtils;
 import crud.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +29,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private Result result;
+
     @Override
     public Result login(User user) {
-        Result result = new Result();
         int count = userMapper.searchName(user);
         //如果count=0，说明未查询到用户名
         if (count == 1) {
@@ -59,34 +58,35 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result register(User user) {
-        Result result = new Result();
-        userMapper.register(user);
-        result = Result.ok();
-        return result;
+        int count = userMapper.register(user);
+        if (count ==1){
+            return Result.ok();
+        }
+        return Result.failed();
     }
 
     @Override
     public Result getUsers(Map<String, Object> map) {
-        Result result = Result.ok();
         PageHelper.startPage(map);
         List<User> list = userMapper.getUsers(map);
         PageInfo<User> pageInfo = new PageInfo<>(list);
         result.setData(pageInfo.getList());
         result.setCount(pageInfo.getTotal());
+        result.setCode(0);
         return result;
     }
 
     @Override
     public Result delete(String[] ids) {
-        Result result = Result.ok();
         int count = userMapper.delete(ids);
-        result = Result.ok();
-        return result;
+        if (ids.length == count){
+            return Result.ok();
+        }
+        return Result.failed();
     }
 
     @Override
     public Result getProvince() {
-        Result result = Result.ok();
         List<Area> list = userMapper.getProvince();
         result.setData(list);
         return result;
@@ -94,7 +94,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result getCity(String provincecode) {
-        Result result = Result.ok();
         List<Area> list = userMapper.getCity(provincecode);
         result.setData(list);
         return result;
@@ -102,7 +101,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result getArea(String citycode) {
-        Result result = Result.ok();
         List<Area> list = userMapper.getArea(citycode);
         result.setData(list);
         return result;
@@ -110,9 +108,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result update(User user) {
-        Result result = Result.ok();
-        userMapper.update(user);
-        return result;
+        int count =  userMapper.update(user);
+        if (count == 1){
+            return Result.ok();
+        }
+        return Result.failed();
     }
 
     @Override
@@ -123,7 +123,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result checkToken(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
-        Result result = new Result();
         if (token == null) {
             result.setCode(1);
         } else {
@@ -145,8 +144,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result changeWord(User user) {
-        Result result = Result.ok();
-        userMapper.changeWord(user);
-        return result;
+        int count = userMapper.changeWord(user);
+        if (count == 1){
+            return Result.ok();
+        }
+        return Result.failed();
     }
 }

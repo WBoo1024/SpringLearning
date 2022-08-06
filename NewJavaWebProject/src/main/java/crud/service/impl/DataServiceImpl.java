@@ -26,50 +26,43 @@ public class DataServiceImpl implements DataService {
     @Resource(name = "dataMapper")
     private DataMapper dataMapper;
 
+    @Autowired
+    private Result result;
+
     @Override
-    public Result allSearch(Map<String,Object> map) {
-
-        Result result = new Result();
-
+    public Result allSearch(Map<String, Object> map) {
         PageHelper.startPage(map);
         List<Teacher> list = dataMapper.allSearch(map);
         PageInfo<Teacher> pageInfo = new PageInfo<>(list);
         result.setData(pageInfo.getList());
         result.setCount(pageInfo.getTotal());
+        result.setCode(0);
         return result;
     }
 
-
     @Override
     public Result add(Teacher teacher) {
-
-        Result result = new Result();
-
-        if (dataMapper.add(teacher) == 1){
+        if (dataMapper.add(teacher) == 1) {
             result = Result.ok();
-        };
-        return result;
+        }
+        return Result.failed();
     }
 
     @Override
     public Result delete(String[] ids) {
-        Result result = Result.failed();
-
         int count = dataMapper.delete(ids);
-        if (ids.length == count){
-            result = Result.ok();
-            return result;
-        };
-        return result;
+        if (ids.length == count) {
+            return Result.ok();
+        }
+        return Result.failed();
     }
 
     @Override
     public Result update(Teacher teacher) {
-        Result result = Result.failed();
-
-        dataMapper.update(teacher);
-        return Result.ok();
+        int count = dataMapper.update(teacher);
+        if (count == 1) {
+            return Result.ok();
+        }
+        return Result.failed();
     }
-
-
 }

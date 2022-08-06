@@ -8,7 +8,9 @@ import crud.service.UserService;
 import crud.service.impl.UserServiceImpl;
 import crud.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -26,10 +28,23 @@ import java.util.Map;
 /**
  * @author WANG
  */
-
+@WebServlet("/front/*")
 public class UserServlet extends HttpServlet {
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                config.getServletContext());
+    }
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private Result result;
+
+    @Autowired
+    private User user;
 
     @Override
     public void init() throws ServletException {
@@ -40,7 +55,6 @@ public class UserServlet extends HttpServlet {
     public void service(ServletRequest req, ServletResponse resp) throws ServletException, IOException {
         HttpServletResponse response = (HttpServletResponse) resp;
         HttpServletRequest request = (HttpServletRequest) req;
-
         String uri = request.getRequestURI();
         String URI = uri.substring(uri.lastIndexOf("/"));
         switch (URI) {
@@ -86,8 +100,6 @@ public class UserServlet extends HttpServlet {
     }
 
     private void changeWord(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        User user  = new User();
-        Result result = new Result();
         try {
             BeanUtils.populate(user, request.getParameterMap());
             result = userService.changeWord(user);
@@ -99,7 +111,6 @@ public class UserServlet extends HttpServlet {
 
     private void sendCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String email = request.getParameter("email");
-        Result result = Result.ok();
         int code = (int)((Math.random()*9+1)*100000);
         result.setData(code);
         SendMail sendMail = new SendMail(email,code);
@@ -108,14 +119,12 @@ public class UserServlet extends HttpServlet {
     }
 
     private void checkToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Result result = userService.checkToken(request);
+        result = userService.checkToken(request);
         response.setContentType("application/json;charset=utf-8");
         response.getWriter().write(new Gson().toJson(result));
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Result result = new Result();
-        User user = new User();
         try {
             BeanUtils.populate(user, request.getParameterMap());
             result = userService.update(user);
@@ -127,7 +136,7 @@ public class UserServlet extends HttpServlet {
 
     private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String[] ids = request.getParameterValues("datas[]");
-        Result result = userService.delete(ids);
+        result = userService.delete(ids);
         response.getWriter().write(new Gson().toJson(result));
     }
 
@@ -136,7 +145,6 @@ public class UserServlet extends HttpServlet {
     }
 
     private void getUsers(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Result result = new Result();
         int page = Integer.parseInt(request.getParameter("page"));
         int limit = Integer.parseInt(request.getParameter("limit"));
         String name = request.getParameter("name");
@@ -151,8 +159,6 @@ public class UserServlet extends HttpServlet {
 
     //登陆请求
     private void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Result result = new Result();
-        User user = new User();
         try {
             BeanUtils.populate(user, request.getParameterMap());
         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -164,8 +170,6 @@ public class UserServlet extends HttpServlet {
 
     //注册请求
     private void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        User user = new User();
-        Result result = new Result();
         try {
             user.setReTime(LocalDateTime.now());
             BeanUtils.populate(user, request.getParameterMap());
@@ -179,21 +183,21 @@ public class UserServlet extends HttpServlet {
 
     //获取省数据
     private void getProvince(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Result result = userService.getProvince();
+        result = userService.getProvince();
         response.getWriter().write(new Gson().toJson(result));
     }
 
     //获取市数据
     private void getCity(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String provincecode = request.getParameter("value");
-        Result result = userService.getCity(provincecode);
+        result = userService.getCity(provincecode);
         response.getWriter().write(new Gson().toJson(result));
     }
 
     //获取区数据
     private void getArea(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String citycode = request.getParameter("value");
-        Result result = userService.getArea(citycode);
+        result = userService.getArea(citycode);
         response.getWriter().write(new Gson().toJson(result));
     }
 

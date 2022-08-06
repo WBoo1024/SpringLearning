@@ -7,8 +7,11 @@ import org.apache.commons.beanutils.BeanUtils;
 import crud.service.DataService;
 import crud.service.impl.DataServiceImpl;
 import crud.vo.Result;
+import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -29,8 +32,17 @@ public class IndexServlet extends HttpServlet {
     @Autowired
     private DataService dataService;
 
-    public IndexServlet() {
-        dataService = new DataServiceImpl();
+    @Autowired
+    private Result result;
+
+    @Autowired
+    private Teacher teacher;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                config.getServletContext());
     }
 
     @Override
@@ -64,12 +76,9 @@ public class IndexServlet extends HttpServlet {
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Result result = Result.failed();
-        Teacher teacher = new Teacher();
         try {
             BeanUtils.populate(teacher,request.getParameterMap());
             result = dataService.update(teacher);
-
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
@@ -77,15 +86,12 @@ public class IndexServlet extends HttpServlet {
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Result result = new Result();
         String[] ids = request.getParameterValues("datas[]");
         result = dataService.delete(ids);
         response.getWriter().write(new Gson().toJson(result));
     }
 
     private void add(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Teacher teacher = new Teacher();
-        Result result = new Result();
         try {
             BeanUtils.populate(teacher,request.getParameterMap());
             result = dataService.add(teacher);
@@ -104,7 +110,6 @@ public class IndexServlet extends HttpServlet {
         map.put("pageNum",page);
         map.put("pageSize",limit);
         map.put("name",name);
-        Result result = new Result();
         result = dataService.allSearch(map);
         response.getWriter().write(new Gson().toJson(result));
     }
