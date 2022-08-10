@@ -1,7 +1,7 @@
 package crud.mapper;
 
 import crud.bean.Teacher;
-import org.apache.ibatis.annotations.Mapper;
+import crud.bean.User;
 
 import java.util.List;
 import java.util.Map;
@@ -20,4 +20,6 @@ public interface DataMapper {
     int delete(String[] ids);
 
     int update(Teacher teacher);
+
+    int upload(User user);
 }
