@@ -26,4 +26,8 @@
             </if>
         </where>
     </select>
+
+    <update id="upload" parameterType="user">
+        update user set picture = #{picture} where username = #{username}
+    </update>
 </mapper>

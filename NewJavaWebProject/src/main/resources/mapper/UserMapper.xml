@@ -50,14 +50,14 @@
     </select>
 
     <select id="getCity" resultType="area" parameterType="string">
-        select code,name from sc_city where provincecode = #{provincecode}
+        select code,name from sc_city where provincecode = #{provinceCode}
     </select>
 
     <select id="getArea" resultType="area" parameterType="string">
-        select code,name from sc_area where citycode = #{citycode}
+        select code,name from sc_area where citycode = #{cityCode}
     </select>
     <select id="searchPic" resultType="string" parameterType="string">
-        select picture from user where username = #{name}
+        select picture from user where username = #{username}
     </select>
 
 </mapper>
