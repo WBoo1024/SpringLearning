@@ -1,10 +1,9 @@
 package crud.bean;
 
 import lombok.Data;
-import org.springframework.stereotype.Component;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @program: NewJavaWebProject
@@ -14,13 +13,14 @@ import java.util.Date;
  */
 
 @Data
-@Component
 public class User {
     private int uid;
     private String username;
     private String password;
     private String email;
     private String phone;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime reTime;
     private String address;
+    private String picture;
 }
