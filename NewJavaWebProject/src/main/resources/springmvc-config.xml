@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <!--  加载springmvc驱动-->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="defaultCharset" value="UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--  加载静态文件  -->
+    <mvc:default-servlet-handler/>
+
+    <!--  扫描注解  -->
+    <context:component-scan base-package="crud.controller"/>
+
+    <!--处理跨域请求-->
+    <mvc:cors>
+        <mvc:mapping path="/**"/>
+    </mvc:cors>
+
+    <!--  设置上传解析器  -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--控制文件上传大小单位字节 默认没有大小限制 这里是2-->
+        <property name="maxUploadSize" value="5000000"/>
+    </bean>
+</beans>
