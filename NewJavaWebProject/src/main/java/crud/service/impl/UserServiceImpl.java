@@ -30,12 +30,10 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserMapper userMapper;
 
-    @Resource
-    private Result result;
-
     @Override
     public Result login(User user) {
         int count = userMapper.searchName(user);
+        Result result = new Result();
         //如果count=0，说明未查询到用户名
         if (count == 1) {
             count += userMapper.login(user);
@@ -73,6 +71,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result getUsers(Map<String, Object> map) {
+        Result result = new Result();
         PageHelper.startPage(map);
         List<User> list = userMapper.getUsers(map);
         PageInfo<User> pageInfo = new PageInfo<>(list);
@@ -94,6 +93,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result getProvince() {
         List<Area> list = userMapper.getProvince();
+        Result result = new Result();
         result.setData(list);
         return result;
     }
@@ -101,6 +101,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result getCity(String provinceCode) {
         List<Area> list = userMapper.getCity(provinceCode);
+        Result result = new Result();
         result.setData(list);
         return result;
     }
@@ -108,6 +109,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result getArea(String cityCode) {
         List<Area> list = userMapper.getArea(cityCode);
+        Result result = new Result();
         result.setData(list);
         return result;
     }
@@ -129,6 +131,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result checkToken(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
+        Result result = new Result();
         if (token == null) {
             result.setCode(1);
         } else {
