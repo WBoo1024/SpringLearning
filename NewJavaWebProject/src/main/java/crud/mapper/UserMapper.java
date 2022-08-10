@@ -41,7 +41,7 @@ public interface UserMapper {
 
     int update(User user);
 
-    String searchPic(String name);
+    String searchPic(String username);
 
     int changeWord(User user);
 }
