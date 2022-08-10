@@ -131,7 +131,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result checkToken(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
-        Result result = new Result();
+        Result result = Result.failed();
         if (token == null) {
             result.setCode(1);
         } else {
