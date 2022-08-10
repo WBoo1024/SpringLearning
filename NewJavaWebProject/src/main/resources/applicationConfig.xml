@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
     <!--  包扫描  -->
-    <context:component-scan base-package="crud"/>
+    <context:component-scan base-package="crud.service"/>
 
     <!--  配置指定数据库  -->
     <context:property-placeholder location="classpath:jdbc-config.properties"/>
@@ -22,7 +22,16 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="typeAliasesPackage" value="crud.bean"/>
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
-        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="configuration">
+            <bean class="org.apache.ibatis.session.Configuration">
+                <property name="logImpl" value="org.apache.ibatis.logging.stdout.StdOutImpl"/>
+            </bean>
+        </property>
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor"/>
+            </array>
+        </property>
     </bean>
 
     <!--  mapper引入sqlSession  -->
