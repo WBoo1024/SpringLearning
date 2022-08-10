@@ -1,6 +1,7 @@
 package crud.service;
 
 import crud.bean.Teacher;
+import crud.bean.User;
 import crud.vo.Result;
 
 import java.util.Map;
@@ -17,4 +18,6 @@ public interface DataService {
     Result delete(String[] ids);
 
     Result update(Teacher teacher);
+
+    Result upload(User user);
 }
