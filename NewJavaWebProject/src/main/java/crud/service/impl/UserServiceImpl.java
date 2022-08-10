@@ -9,9 +9,10 @@ import crud.mapper.UserMapper;
 import crud.service.UserService;
 import crud.util.JwtUtils;
 import crud.vo.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,10 +27,10 @@ import java.util.Map;
  */
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
-    @Autowired
+    @Resource
     private Result result;
 
     @Override
@@ -58,9 +59,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result register(User user) {
-        int count = userMapper.register(user);
-        if (count ==1){
-            return Result.ok();
+        user.setReTime(LocalDateTime.now());
+        try {
+            int count = userMapper.register(user);
+            if (count ==1){
+                return Result.ok();
+            }
+        } catch (Exception e) {
+            return Result.failed();
         }
         return Result.failed();
     }
@@ -93,15 +99,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result getCity(String provincecode) {
-        List<Area> list = userMapper.getCity(provincecode);
+    public Result getCity(String provinceCode) {
+        List<Area> list = userMapper.getCity(provinceCode);
         result.setData(list);
         return result;
     }
 
     @Override
-    public Result getArea(String citycode) {
-        List<Area> list = userMapper.getArea(citycode);
+    public Result getArea(String cityCode) {
+        List<Area> list = userMapper.getArea(cityCode);
         result.setData(list);
         return result;
     }
@@ -131,11 +137,11 @@ public class UserServiceImpl implements UserService {
                 result.setCode(1);
             } else {
                 result.setCode(0);
-                String name = (String) claims.get("userName");
-                String url = userMapper.searchPic(name);
+                String username = (String) claims.get("userName");
+                String url = userMapper.searchPic(username);
                 List<String> list = new ArrayList<>();
                 list.add(url);
-                list.add(name);
+                list.add(username);
                 result.setData(list);
             }
         }

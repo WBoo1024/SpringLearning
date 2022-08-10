@@ -3,15 +3,13 @@ package crud.service.impl;
 import crud.bean.Teacher;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import crud.bean.User;
 import crud.mapper.DataMapper;
-import org.apache.ibatis.session.SqlSession;
 import crud.service.DataService;
 import crud.vo.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -26,24 +24,21 @@ public class DataServiceImpl implements DataService {
     @Resource(name = "dataMapper")
     private DataMapper dataMapper;
 
-    @Autowired
-    private Result result;
-
     @Override
     public Result allSearch(Map<String, Object> map) {
         PageHelper.startPage(map);
         List<Teacher> list = dataMapper.allSearch(map);
         PageInfo<Teacher> pageInfo = new PageInfo<>(list);
+        Result result = Result.ok();
         result.setData(pageInfo.getList());
         result.setCount(pageInfo.getTotal());
-        result.setCode(0);
         return result;
     }
 
     @Override
     public Result add(Teacher teacher) {
         if (dataMapper.add(teacher) == 1) {
-            result = Result.ok();
+            return Result.ok();
         }
         return Result.failed();
     }
@@ -62,6 +57,17 @@ public class DataServiceImpl implements DataService {
         int count = dataMapper.update(teacher);
         if (count == 1) {
             return Result.ok();
+        }
+        return Result.failed();
+    }
+
+    @Override
+    public Result upload(User user) {
+        int count = dataMapper.upload(user);
+        if (count == 1) {
+            Result result = Result.ok();
+            result.setData(user.getPicture());
+            return result;
         }
         return Result.failed();
     }
